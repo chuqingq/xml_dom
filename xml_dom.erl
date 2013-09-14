@@ -4,10 +4,11 @@
 
 -include_lib("xmerl/include/xmerl.hrl").
 
--type elem() :: {Name::string(), Attrs::[{string(), string()}], string() | [elem()]}.
+-type elem() :: {Name::string(), Attrs::[{string(), string()}], Content::string()|[elem()]}.
 
 %% API
 
+-spec simple_form(File::list()) -> {ok, elem()} | {error, Reason::any()}.
 simple_form(File) when is_list(File) ->
     simple_form(File, []).
 
@@ -15,7 +16,7 @@ simple_form(File) when is_list(File) ->
 simple_form(File, Opts) when is_list(File) andalso is_list(Opts) ->    
     try xmerl_scan:file(File, Opts) of
         {E = #xmlElement{}, _Tail} ->
-            parse_element(E);
+            {ok, parse_element(E)};
         Error -> Error
     catch _E:Pattern -> {error, Pattern}
     end.
