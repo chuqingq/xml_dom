@@ -1,7 +1,7 @@
 xml_dom
 =======
 
-simiple xml dom parser for erlang
+simple xml dom parser for erlang
 
 test.xml:
 
